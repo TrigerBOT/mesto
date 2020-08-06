@@ -1,0 +1,11 @@
+.form__buttons{
+    align-items: center;
+    width: 76%;
+    margin: 0 auto;
+}
+@media screen and (max-width: 700px){
+    .form__buttons{
+      width: 90%;
+    
+    }
+  }

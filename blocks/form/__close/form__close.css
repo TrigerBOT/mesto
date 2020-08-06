@@ -1,0 +1,15 @@
+.form__close{
+    position: relative;
+    top: -40px;
+    right: -430px;
+    width: 33px;
+}
+.form__close:hover{
+    opacity: 0.5;
+    cursor: pointer;
+}
+@media screen and (max-width: 700px){
+    .form__close{
+      right: -240px;
+    }
+  }

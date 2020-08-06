@@ -1,0 +1,22 @@
+.form__submit {
+    width: 358px;
+    height: 50.15px;
+    margin: 0 auto;
+    background: url(../../../images/submit.jpg)  center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+border: 0;
+
+}
+.form__submit:hover{
+    opacity: 0.5;
+    cursor: pointer;
+}
+@media screen and (max-width: 700px){
+    .form__submit{
+        width: 200px;
+        height: 40px;
+    }
+  }

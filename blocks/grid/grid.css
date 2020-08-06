@@ -1,0 +1,25 @@
+@import url(./__photo/grid_photo.css);
+@import url(./__element/grid__element.css);
+@import url(./__title/grid__title.css);
+@import url(./__text/grid__text.css);
+.grid{
+    width: 86%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 282px 282px 282px;
+    grid-gap: 18px 21px;
+    justify-content: center; 
+    color: black;
+}
+@media screen and (min-width:700px) and (max-width :1023px){
+    .grid{
+        grid-template-columns: 282px 282px ;
+        align-items: center;
+    }
+}
+@media screen and (max-width:699px){
+    .grid{
+        grid-template-columns: 282px ;
+        align-items: center;
+    }
+}

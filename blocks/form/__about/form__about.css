@@ -1,0 +1,13 @@
+.form__about{
+    border: 0;
+    border-bottom: 1px solid black;
+    margin-bottom: 48px;
+    width: 100%;
+}
+@media screen and (max-width: 700px){
+    .form__about{
+     font-size: 12px;
+     line-height: 15px;
+     margin-bottom: 36px;
+    }
+   }

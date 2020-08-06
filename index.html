@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./pages/index.css">
+    <title>Mesto</title>
+</head>
+
+<body class="page">
+    
+    <header class="header">
+        <img src="./images/logo.svg" alt="Логотип 'Место'" class="header__logo">
+        <img src="./images/Line.jpg" alt="" class="header__line">
+    </header>
+ 
+    <section class="profile">
+        <img src="./images/image.jpg" alt="фото профиля" class="profile__photo">
+        <div class="profile__info">
+
+            <p class="profile__name">Жак-Ив Кусто <img src="./images/Edit Button.svg" alt="Ред."
+                    class="profile__edit-button"></p>
+            <p class="profile__about">Исследователь океана</p>
+
+        </div>
+        <img src="./images/Add Button.svg" alt="" class="profile__add-button">
+    </section>
+    <section class="grid">
+        <div class="grid__element">
+            <img src="./images/karachaevsk.png" alt="" class="grid__photo">
+            <div class="grid__text">
+                <h3 class="grid__title">Карачаевск</h3>
+                <img src="./images/like.svg" alt="like" class="grid__like">
+            </div>
+        </div>
+        <div class="grid__element">
+            <img src="./images/Elbrus.png" alt="Эльбрус" class="grid__photo">
+            <div class="grid__text">
+                <h3 class="grid__title">Эльбрус</h3>
+                <img src="./images/like.svg" alt="like" class="grid__like">
+            </div>
+        </div>
+        <div class="grid__element">
+            <img src="./images/dombay.png" alt="Домбай" class="grid__photo">
+            <div class="grid__text">
+                <h3 class="grid__title">Домбай</h3>
+                <img src="./images/like.svg" alt="like" class="grid__like">
+            </div>
+        </div>
+        <div class="grid__element">
+            <img src="./images/Elbrus.png" alt="Эльбрус" class="grid__photo">
+            <div class="grid__text">
+                <h3 class="grid__title">Эльбрус</h3>
+                <img src="./images/like.svg" alt="like" class="grid__like">
+            </div>
+        </div>
+        <div class="grid__element">
+            <img src="./images/dombay.png" alt="Домбай" class="grid__photo">
+            <div class="grid__text">
+                <h3 class="grid__title">Домбай</h3>
+                <img src="./images/like.svg" alt="like" class="grid__like">
+            </div>
+        </div>
+        <div class="grid__element">
+            <img src="./images/karachaevsk.png" alt="" class="grid__photo">
+            <div class="grid__text">
+                <h3 class="grid__title">Карачаево-Черкесия</h3>
+                <img src="./images/like.svg" alt="like" class="grid__like">
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <span class="footer__text">&copy; 2020 Mesto Russia</span>
+    </footer>
+    <section class="popup">
+        <div class="form__background"></div>
+<div class="form">
+        <img src="./images/Close Icon.svg" alt="закрыть" class="form__close">
+
+        <span class="form__title">Редактировать профиль</span>
+        <div class="form__buttons">
+            <input type="text"  required class="form__name" value="" placeholder="Введите имя">
+            <input  type="text"  required  class="form__about" value="" placeholder="О себе"></div>
+        <input type="submit"  class="form__submit" value="">
+    </div>
+
+    </section>
+    <script src="./scripts/script.js"></script>
+</body>

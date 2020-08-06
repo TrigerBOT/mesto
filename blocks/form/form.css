@@ -1,0 +1,29 @@
+@import url(./__background/form__background.css);
+@import url(./__name/form__name.css);
+@import url(./__submit/form__submit.css);
+@import url(./__about/form__about.css);
+@import url(./__title/form__title.css);
+@import url(./__buttons/form__buttons.css);
+@import url(./__close/form__close.css);
+.form {
+ 
+
+    color: black;
+ 
+    background-color: white;
+ 
+    width: 430px;
+    height: 330px;
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+  border-radius: 10px;
+  margin: 0 auto;
+   display: none;
+}
+@media screen and (max-width: 700px){
+  .form{
+    width: 240px;
+    height: 258px;
+  }
+}

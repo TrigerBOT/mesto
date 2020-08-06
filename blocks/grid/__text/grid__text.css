@@ -1,0 +1,7 @@
+.grid__text{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 88%;
+    margin: 0 auto;
+}
