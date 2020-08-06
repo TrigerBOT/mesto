@@ -32,9 +32,9 @@ function open(){
 
 function save(event){
     event.preventDefault()
-    name.innerHTML = nameInput.value + ` <img src="./images/Edit Button.svg" alt="Ред." class="profile__edit-button">`;
-            formEdit = document.querySelector(`.profile__edit-button`);
-            formEdit.addEventListener('click', open );
+    name.innerHTML = nameInput.value;
+          //  formEdit = document.querySelector(`.profile__edit-button`);
+//formEdit.addEventListener('click', open );
     about.textContent = aboutInput.value;
     close();
 }
