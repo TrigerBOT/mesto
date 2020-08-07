@@ -1,7 +1,7 @@
 @import url(./__logo/header__logo.css);
 @import url(./__line/header__line.css);
 .header{
-    position: relative;
+
     width: 69%;
     padding-top: 45px;
     margin: 0 auto;
@@ -9,7 +9,7 @@
 @media screen and (max-width:699px){
     .header{
         width: 100%;
-        position: relative;
+        
       
     }
 }
