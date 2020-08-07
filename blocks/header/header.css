@@ -2,7 +2,7 @@
 @import url(./__line/header__line.css);
 .header{
     position: relative;
-    width: 86%;
+    width: 69%;
     padding-top: 45px;
     margin: 0 auto;
 }
@@ -11,5 +11,10 @@
         width: 100%;
         position: relative;
       
+    }
+}
+@media screen and (min-width:699px) and (max-width:1024px){
+    .header{
+        width: 86%;
     }
 }

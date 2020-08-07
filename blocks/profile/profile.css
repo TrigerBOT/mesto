@@ -7,8 +7,9 @@
 @import url(./__title/profile__title.css);
 .profile {
     display: grid;
-    grid-template-columns: 120px 1fr 150px;
-    width: 86%;
+    grid-template-columns: 130px 1fr 150px;
+    width: 69%;
+
     margin: 0 auto;
     margin-top: 2.25rem;
     margin-bottom: 47px;
@@ -20,5 +21,10 @@
         flex-direction: column;
         justify-items: center;
         align-items: center;
+    }
+}
+@media screen and (min-width:700px) and (max-width:1024px){
+    .profile{
+        width: 86%;
     }
 }

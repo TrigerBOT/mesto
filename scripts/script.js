@@ -41,3 +41,10 @@ function save(event){
 formEdit.addEventListener('click', open );
 formClose.addEventListener('click', close );
 formSub.addEventListener('click', save );
+
+form.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        formSub.click();
+    }
+});

@@ -3,7 +3,7 @@
 @import url(./__title/grid__title.css);
 @import url(./__text/grid__text.css);
 .grid{
-    width: 86%;
+    width: 69%;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 282px 282px 282px;
