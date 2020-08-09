@@ -1,15 +1,24 @@
 .form__close{
-    position: relative;
-    top: -40px;
-    right: -430px;
-    width: 33px;
-}
+    background: url(../../../images/close_icon.svg)  center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    height: 40.7px;
+    width: 40.7px;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    margin-left: 465px;
+    outline: none;}
+    
 .form__close:hover{
     opacity: 0.5;
     cursor: pointer;
+   
 }
 @media screen and (max-width: 700px){
     .form__close{
-      right: -240px;
+      margin-left: 260px;
     }
   }

@@ -7,9 +7,9 @@
 @import url(./__title/profile__title.css);
 .profile {
     display: grid;
-    grid-template-columns: 130px 1fr 150px;
+    grid-template-columns: 140px 1fr 150px;
     width: 69%;
-
+    flex-direction: column;
     margin: 0 auto;
     margin-top: 2.25rem;
     margin-bottom: 47px;

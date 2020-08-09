@@ -7,13 +7,29 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-border: 0;
+        border: none;
+        background-color: transparent;
+        border-radius: 0;
+        outline: none;
+    }
+    .form__submit:hover{
+        opacity: 0.5;
+        }
+       
+        .form__submit:active{
+            padding: 0;
+            border: none;
+            background-color: transparent;
+            border-radius: 0;
+            
+        }
+        .form__submit:focus{
+            padding: 0;
+        border: none;
+        background-color: transparent;
+        border-radius: 0;
+        }
 
-}
-.form__submit:hover{
-    opacity: 0.5;
-    cursor: pointer;
-}
 @media screen and (max-width: 700px){
     .form__submit{
         width: 200px;
