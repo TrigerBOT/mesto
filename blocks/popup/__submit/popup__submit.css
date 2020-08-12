@@ -1,7 +1,8 @@
-.form__submit {
+.popup__submit {
     width: 358px;
     height: 50.15px;
     margin: 0 auto;
+    margin-bottom: 36px;
     background: url(../../../images/submit.jpg)  center center;
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -12,18 +13,18 @@
         border-radius: 0;
         outline: none;
     }
-    .form__submit:hover{
+    .popup__submit:hover{
         opacity: 0.5;
         }
        
-        .form__submit:active{
+        .popup__submit:active{
             padding: 0;
             border: none;
             background-color: transparent;
             border-radius: 0;
             
         }
-        .form__submit:focus{
+        .popup__submit:focus{
             padding: 0;
         border: none;
         background-color: transparent;
@@ -31,7 +32,7 @@
         }
 
 @media screen and (max-width: 700px){
-    .form__submit{
+    .popup__submit{
         width: 200px;
         height: 40px;
     }

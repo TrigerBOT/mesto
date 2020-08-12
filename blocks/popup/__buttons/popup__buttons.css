@@ -1,11 +1,11 @@
-.form__buttons{
+.popup__buttons{
     align-items: center;
     width: 82.5%;
     margin-left: 36px;
 
 }
 @media screen and (max-width: 700px){
-    .form__buttons{
+    .popup__buttons{
       width: 80%;
     margin: 0 20px;
     }
