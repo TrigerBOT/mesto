@@ -1,0 +1,12 @@
+.popup-img__img {
+    max-width: 75vw;
+    height: 75vh;
+    border-radius: 10px;
+}
+
+@media screen and (max-width:700px) {
+    .popup-img__img {
+        width: 240px;
+        height: 299px;
+    }
+}

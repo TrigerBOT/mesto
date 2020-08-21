@@ -1,0 +1,11 @@
+.popup-img__cont{
+    max-width: 75vw;
+    max-height: 75vh;
+
+    border-radius: 10px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0;
+    align-items: center;
+    justify-content: center
+}
