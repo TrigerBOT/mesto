@@ -9,10 +9,10 @@ const nameInput = document.querySelector(`.popup__input_name`);
 const aboutInput = document.querySelector(`.popup__input_about`);
 const page = document.querySelector(`.page`);
 const popup = document.querySelector(`.popup`);
+const popAdd = document.getElementById(`form__add`);
 const imgfull = document.querySelector(`.popup__img`);
 const imgText = document.querySelector(`.popup__text`);
 const popCard = document.querySelector(`.popup__create`);
-
 const initialCards = [
     {
         name: 'Архыз',
@@ -94,13 +94,12 @@ const card = [
     }
 ];
 
-function vals(e) {
-    e.preventDefault();
+function vals(event) {
+    
     card.name = placeNameInput.value;
     card.link = linkInput.value;
-    console.log(card.name);
-    SectionCards.append(renderCards(card));
-
+    SectionCards.prepend(renderCards(card));
+    event.preventDefault();
 }
 
 function like(event) {
@@ -120,12 +119,7 @@ function save(event) {
     name.textContent = nameInput.value;
     about.textContent = aboutInput.value;
 }
-function pressEnter(event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-        formSub.click();
-    }
-}
+
 const popupProfile = document.querySelector('.popup[data-type="profile_edit"]'); // попап профиля
 const popupPlace = document.querySelector('.popup[data-type="place"]'); // попап добавления карточки
 const popupImg = document.querySelector('.popup[data-type="img"]')
@@ -156,5 +150,4 @@ document.querySelectorAll('.popup__close').forEach((button) => {
 });
 
 form.addEventListener('submit', save);
-form.addEventListener("keyup", pressEnter);
-popCard.addEventListener('submit', vals);
+popAdd.addEventListener('submit', vals);
