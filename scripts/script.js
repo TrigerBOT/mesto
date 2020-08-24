@@ -65,7 +65,7 @@ function renderCards(card) {
     const likeB = TemplateCards.querySelector('.card__like');
     likeB.addEventListener('click', like);
     const delB = TemplateCards.querySelector('.card__delete');
-    delB.addEventListener('click', del);
+    delB.addEventListener('click', (del));
     const img = TemplateCards.querySelector('.card__photo');
     img.addEventListener('click', () => {
         togglePopup(popupImg);
@@ -108,7 +108,7 @@ function like(event) {
     event.stopPropagation();
 }
 function del(event) {
-    const place = document.querySelector('.card');
+    const place = event.target.closest('.card');
     place.remove();
     event.stopPropagation();
 }
