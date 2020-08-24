@@ -40,9 +40,10 @@
     <footer class="footer">
         <p class="footer__text">&copy; 2020 Mesto Russia</p>
     </footer>
-    <section class="popup">
-        <button type="button"  class="popup__close"></button>
-        <form class="popup__form" method="GET" action="#" name="profile_edit">    
+    <section class="popup" data-type="profile_edit">
+        
+        <form class="popup__form" method="GET" action="#" name="profile_edit" >   
+            <button type="button"  class="popup__close"></button> 
             <h2 class="popup__title">Редактировать профиль</h2>
             <div class="popup__buttons">
                 <input type="text" name="name" required class="popup__input popup__input_name" value="" placeholder="Введите имя">
@@ -51,9 +52,10 @@
            </div>  
         </form>
     </section>
-    <section class="popup-add">
-        <button type="button"  class="popup-add__close"></button>
-        <form class="popup__form" method="GET" action="#" name="addCard">    
+    <section class="popup" data-type="place">
+        
+        <form class="popup__form" method="GET" action="#" name="addCard" >    
+            <button type="button"  class="popup__close"></button>
             <h2 class="popup__title">Новое место</h2>
             <div class="popup__buttons">
                 <input type="text" name="place" required class="popup__input popup__input_place" value="" placeholder="Название">
@@ -62,11 +64,11 @@
            </div>  
         </form>
     </section>
-    <section class="popup-img">
-        <div class="popup-img__cont">
-        <button type="button"  class="popup-img__close"></button>
-        <img src="" alt="" class="popup-img__img">
-        <p class="popup-img__text"></p>
+    <section class="popup" data-type="img">
+        <div class="popup__cont">
+        <button type="button"  class="popup__close"></button>
+        <img src="" alt="" class="popup__img">
+        <p class="popup__text"></p>
     </div>
     </section>
     <script src="./scripts/script.js"></script>
