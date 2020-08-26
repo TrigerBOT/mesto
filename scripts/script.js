@@ -70,6 +70,7 @@ function renderCards(card) {
     img.addEventListener('click', () => {
         togglePopup(popupImg);
         imgfull.src = card.link;
+        imgfull.alt = card.name;
         imgText.textContent = card.name;
     });
     return TemplateCards;
@@ -99,6 +100,7 @@ function vals(event) {
     card.name = placeNameInput.value;
     card.link = linkInput.value;
     SectionCards.prepend(renderCards(card));
+    togglePopup(event.target.closest('.popup'));
     event.preventDefault();
 }
 
@@ -118,6 +120,7 @@ function save(event) {
     event.preventDefault();
     name.textContent = nameInput.value;
     about.textContent = aboutInput.value;
+    togglePopup(event.target.closest('.popup'));
 }
 
 const popupProfile = document.querySelector('.popup[data-type="profile_edit"]'); // попап профиля
