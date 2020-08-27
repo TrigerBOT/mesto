@@ -59,7 +59,9 @@ const initialCards = [
 const SectionCards = document.querySelector(`.cards`);
 function renderCards(card) {
     const TemplateCards = document.querySelector(`#card-template`).content.cloneNode(true);
-    TemplateCards.querySelector(`.card__photo`).src = card.link;
+    let cardPhoto = TemplateCards.querySelector(`.card__photo`);
+    cardPhoto.src = card.link;
+    cardPhoto.alt = card.name;
     TemplateCards.querySelector(`.card__title`).textContent = card.name;
 
     const likeB = TemplateCards.querySelector('.card__like');
