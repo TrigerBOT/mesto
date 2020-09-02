@@ -2,7 +2,7 @@
   color: black;
   background-color: white;
   width: 430px;
-  position: relative;
+  position: absolute;
   z-index: 2;
   flex-direction: column;
   border-radius: 10px;

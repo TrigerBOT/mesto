@@ -1,7 +1,7 @@
 const form = document.querySelector(`.popup__form`);
 const buttonProfile = document.querySelector(`.profile__edit-button`);
 const formClose = document.querySelector(`.popup__close`);
-const formSub = document.querySelector(`.popup__submit`);
+
 const buttonPlace = document.querySelector(`.profile__add-button`);
 const name = document.querySelector(`.profile__name`);
 const about = document.querySelector(`.profile__about`);
@@ -13,6 +13,8 @@ const popAdd = document.getElementById(`form__add`);
 const imgfull = document.querySelector(`.popup__img`);
 const imgText = document.querySelector(`.popup__text`);
 const popCard = document.querySelector(`.popup__create`);
+
+
 const initialCards = [
     {
         name: 'Архыз',
@@ -126,33 +128,139 @@ function save(event) {
 }
 
 const popupProfile = document.querySelector('.popup[data-type="profile_edit"]'); // попап профиля
-const popupPlace = document.querySelector('.popup[data-type="place"]'); // попап добавления карточки
+const popupPlace = document.querySelector('.popup[data-type="place"]'); // попап карточки
 const popupImg = document.querySelector('.popup[data-type="img"]')
-// функция, которая делает видимым или скрытым тот попап, который передан ей в качестве аргумента
+
 function togglePopup(pop) {
     pop.classList.toggle('popup__opened');
 }
 
-// функция открытия попапа редактирования профиля - по сути обработчик события клика
 function openProfileForm() {
     togglePopup(popupProfile);
     aboutInput.value = about.textContent;
     nameInput.value = name.textContent;
-     // popupProfile - передаем, чтобы открылся попап профиля
+   
 }
-// функция открытия попапа добавления карточки
 function openPlaceForm() {
-    togglePopup(popupPlace); // popupPlace - чтобы открыть попап добавления карточки
+    togglePopup(popupPlace); 
 }
-buttonProfile.addEventListener('click', openProfileForm); // кнопка открытия формы профиля
-buttonPlace.addEventListener('click', openPlaceForm); // кнопка открытия формы для карточки
+buttonProfile.addEventListener('click', openProfileForm); // кнопка профиля
+buttonPlace.addEventListener('click', openPlaceForm); // кнопка карточки
 
 // добавляем обработчик для всех кнопок закрытия попапов на странице
 document.querySelectorAll('.popup__close').forEach((button) => {
-    button.addEventListener('click', (event) => {
-        togglePopup(event.target.closest('.popup'));
+    button.addEventListener('click', (evt) => {
+        togglePopup(evt.target.closest('.popup'));
     });
 });
+document.querySelectorAll('.popup').forEach((popup)=>{
+    popup.addEventListener('keydown', (evt) =>{
+    if(evt.key === 'Escape'){
+        togglePopup(evt.target.closest('.popup'));
+    }
+    })
+});
+//закрытие при нажатии на overlay
+
+document.querySelectorAll('.popup__overlay').forEach((over)=>{
+    over.addEventListener('click',(evt)=>{
+        togglePopup(evt.target.closest('.popup'));
+    });
+
+})
+
 
 form.addEventListener('submit', save);
 popAdd.addEventListener('submit', vals);
+
+
+//Валидация  карточек
+const formSub = document.querySelector(`.popup__submit`);
+const formNew = document.forms.addCard;
+const ERROR_REQUIRE_TEXT = 'Это обязательное поле';
+const ERROR_LENGTH_TEXT = 'Должно быть от 2 до 30 символов';
+const ERROR_LINK_TEXT = 'Здесь должна быть ссылка';
+const MIN_LEN = 2;
+
+function addDisabledForButton() {    
+    const inputs = Array.from(document.querySelectorAll('form[name=addCard] input'));
+    const isValideForm = inputs.every((elem) => {
+        return elem.checkValidity();
+    });
+
+    if(isValideForm) {
+        
+        document.forms.addCard[3].removeAttribute('disabled', true);
+        document.forms.addCard[3].classList.remove('popup__create_disabled');
+    } else {   
+       
+        document.forms.addCard[3].setAttribute('disabled', true);
+        document.forms.addCard[3].classList.add('popup__create_disabled');
+    }
+}
+
+
+
+// валидация "редактировать профиль" 
+const formProfile = document.forms.profile_edit;
+
+function addDisabledForEditButton() {
+    const inputs = Array.from(document.querySelectorAll('form[name=profile_edit] input[type=text]'));
+    const isValideForm = inputs.every((elem) => {
+        return elem.checkValidity();
+    });
+
+    if(isValideForm) {
+        formSub.removeAttribute('disabled', true);
+        formSub.classList.remove('popup__submit_disabled');
+        document.forms.profile_edit[1];
+        document.forms.profile_edit[2].border;
+    } else {   
+        formSub.setAttribute('disabled', true);
+        formSub.classList.add('popup__submit_disabled');
+    }
+}
+
+formProfile.addEventListener('input', (evt) =>  {
+    const target = evt.target;	
+   
+    if (target.validity.valueMissing) { 
+        target.nextSibling.nextSibling.textContent = ERROR_REQUIRE_TEXT;
+        target.nextSibling.nextSibling.classList.add('popup__input-error_active');
+        
+    } else if (target.value.length > 0 && target.value.length < MIN_LEN) {
+        target.nextSibling.nextSibling.textContent = ERROR_LENGTH_TEXT;
+        target.nextSibling.nextSibling.classList.add('popup__input-error_active');
+    } else {
+        target.nextSibling.nextSibling.textContent = '';
+        target.nextSibling.nextSibling.classList.remove('popup__input-error_active');
+    }
+})
+
+formNew.addEventListener('input', (evt) =>  {
+    const link = formNew.link;	
+    const target = evt.target;
+
+    if (target.validity.valueMissing) { 
+        target.nextSibling.nextSibling.textContent = ERROR_REQUIRE_TEXT;
+        target.nextSibling.nextSibling.classList.add('popup__input-error_active');
+    
+    } else if(target.value.length > 0 && target.value.length < MIN_LEN) {
+        target.nextSibling.nextSibling.textContent = ERROR_LENGTH_TEXT;
+        target.nextSibling.nextSibling.classList.add('popup__input-error_active');
+      
+    } else {
+        target.nextSibling.nextSibling.textContent = '';
+        target.nextSibling.nextSibling.classList.remove('popup__input-error_active');
+    }     
+    if (link.validity.valueMissing) {
+        link.nextSibling.nextSibling.textContent = ERROR_REQUIRE_TEXT;
+        link.nextSibling.nextSibling.classList.add('popup__input-error_active');
+    } else if(!link.validity.valid) {
+        link.nextSibling.nextSibling.textContent = ERROR_LINK_TEXT; 
+        link.nextSibling.nextSibling.classList.add('popup__input-error_active');
+    } 
+})
+addDisabledForButton();
+formNew.addEventListener('input',addDisabledForButton);
+formProfile.addEventListener('input', addDisabledForEditButton);
