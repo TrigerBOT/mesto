@@ -12,3 +12,9 @@
     display: block;
     min-height: 11px;
 }
+@media screen and (max-width: 700px) {
+    .popup__input-error {
+        margin:0 20px ;
+        width: 80%;
+    }
+}
