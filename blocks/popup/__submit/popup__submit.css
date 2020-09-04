@@ -13,6 +13,7 @@
     background-color: transparent;
     border-radius: 0;
     outline: none;
+    cursor: pointer;
 }
 
 .popup__submit:hover {

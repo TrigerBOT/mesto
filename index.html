@@ -46,10 +46,10 @@
             <button type="button" class="popup__close"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
           
-                <input type="text" name="name" required class="popup__input popup__input_name" value="" minlength="2"
+                <input type="text" id="name-input" required class="popup__input popup__input_name" value="" minlength="2"
                     maxlength="40" placeholder="Введите имя">
-                    <p class="popup__input-error" id="name-input"></p>
-                <input type="text" name="about" required class="popup__input popup__input_about" value="" minlength="2"
+                    <p class="popup__input-error" id="name-input-error"></p>
+                <input type="text" id="about-input" required class="popup__input popup__input_about" value="" minlength="2"
                     maxlength="200" placeholder="О себе">
                     <p class="popup__input-error" id="about-input-error"></p>
                 <button type="submit" class="popup__submit" value=""></button>
@@ -61,13 +61,13 @@
             <form class="popup__form" method="GET" action="#" name="addCard" id="form__add" novalidate>
                 <button type="button" class="popup__close"></button>
                 <h2 class="popup__title">Новое место</h2>
-                    <input type="text" name="place" required class="popup__input popup__input_place" value=""
+                    <input type="text" id="place-input" required class="popup__input popup__input_place" value=""
                         placeholder="Название">
                         <p class="popup__input-error" id="place-input-error"></p>
-                    <input type="url" name="link" required class="popup__input popup__input_link" value=""
+                    <input type="url" id="url-input" required class="popup__input popup__input_link" value=""
                         placeholder="Ссылка на картинку">
                         <p class="popup__input-error" id="url-input-error"></p>
-                    <button type="submit" class="popup__create" value=""></button>
+                    <button type="submit" class="popup__submit popup__submit_create" value=""></button>
             </form>
         
     </section>
