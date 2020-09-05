@@ -12,7 +12,7 @@ function setEventListeners(formElement, elementList) {
     const submitButton = formElement.querySelector(elementList.submitButtonSelector);
     toggleButtonState(inputList, submitButton, elementList);
     inputList.forEach((inputElement) => {
-        console.log(inputElement);
+
         inputElement.addEventListener('input', () => {
             checkValidity(formElement, inputElement, elementList);
             toggleButtonState(inputList, submitButton, elementList);
@@ -30,7 +30,6 @@ function checkValidity(formElement, inputElement, elementList) {
 //переключаем состояние кнопки
 function hasInvalidInput(inputList) {
     return inputList.some((inputElement) => {
-        console.log(inputElement.validity.valid);
         return !inputElement.validity.valid;
     })
 }
@@ -46,7 +45,6 @@ function toggleButtonState(inputList, buttonElement, elementList) {
 
 function showInputError(formElement, inputElement, elementList) {
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-console.log(errorElement);
     errorElement.classList.add(elementList.errorClass);
     errorElement.textContent = inputElement.validationMessage;
 };
@@ -62,8 +60,9 @@ function hideInputError(formElement, inputElement, elementList) {
 function enableValidation(elementList) {
     const formList = Array.from(document.querySelectorAll(elementList.formElement));
     formList.forEach((formElement) => {
-     setEventListeners(formElement, elementList);
+        setEventListeners(formElement, elementList);
     })
 }
 enableValidation(formArray);
+
 

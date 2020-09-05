@@ -14,6 +14,8 @@ const imgfull = document.querySelector(`.popup__img`);
 const imgText = document.querySelector(`.popup__text`);
 const popCard = document.querySelector(`.popup__create`);
 
+aboutInput.value = about.textContent;
+nameInput.value = name.textContent;
 
 const initialCards = [
     {
@@ -72,7 +74,7 @@ function renderCards(card) {
     deleteButton.addEventListener('click', (deleteCard));
     const img = templateCards.querySelector('.card__photo');
     img.addEventListener('click', () => {
-        togglePopup(popupImg);
+        openPopup(popupImg);
         imgfull.src = card.link;
         imgfull.alt = card.name;
         imgText.textContent = card.name;
@@ -81,7 +83,9 @@ function renderCards(card) {
 
 }
 
-
+function createCard(obj) {
+    sectionCards.prepend(renderCards(obj));
+}
 initialCards.forEach((card) => {
     createCard(card);
 });
@@ -96,19 +100,23 @@ const card = [
     }
 ];
 
-function createCard(obj) {
-    sectionCards.prepend(renderCards(obj));
+function openPopup(modalWindow) {
+    modalWindow.classList.add('popup__opened');
+    document.addEventListener('keydown', escClose);
+};
+function closePopup(modalWindow) {
+    modalWindow.classList.remove('popup__opened');
+    document.removeEventListener('keydown', escClose);
 }
-
 function newCard(event) {
 
     card.name = placeNameInput.value;
     card.link = linkInput.value;
     createCard(card);
-    togglePopup(event.target.closest('.popup'));
-    event.preventDefault();
+    closePopup(event.target.closest('.popup'));
     placeNameInput.value = '';
     linkInput.value = '';
+    event.preventDefault();
 
 }
 
@@ -127,7 +135,7 @@ function save(event) {
 
     name.textContent = nameInput.value;
     about.textContent = aboutInput.value;
-    togglePopup(event.target.closest('.popup'));
+    closePopup(event.target.closest('.popup'));
     event.preventDefault();
 }
 
@@ -135,26 +143,34 @@ const popupProfile = document.querySelector('.popup[data-type="profile_edit"]');
 const popupPlace = document.querySelector('.popup[data-type="place"]'); // попап карточки
 const popupImg = document.querySelector('.popup[data-type="img"]')
 
-function togglePopup(pop) {
-    pop.classList.toggle('popup__opened');
+
+
+function toggleProfileForm() {
+    if (popupProfile.classList.contains('popup__opened')) {
+        closePopup(popupProfile);
+    }
+    else {
+        openPopup(popupProfile);
+        aboutInput.value = about.textContent;
+        nameInput.value = name.textContent;
+    }
+}
+function togglePlaceForm() {
+    if (popupPlace.classList.contains('popup__opened')) {
+        closePopup(popupProfile);
+    }
+    else {
+        openPopup(popupPlace);
+    }
 }
 
-function openProfileForm() {
-    togglePopup(popupProfile);
-    aboutInput.value = about.textContent;
-    nameInput.value = name.textContent;
-
-}
-function openPlaceForm() {
-    togglePopup(popupPlace);
-}
-buttonProfile.addEventListener('click', openProfileForm); // кнопка профиля
-buttonPlace.addEventListener('click', openPlaceForm); // кнопка карточки
+buttonProfile.addEventListener('click', toggleProfileForm); // кнопка профиля
+buttonPlace.addEventListener('click', togglePlaceForm); // кнопка карточки
 
 // добавляем обработчик для всех кнопок закрытия попапов на странице
 document.querySelectorAll('.popup__close').forEach((button) => {
     button.addEventListener('click', (evt) => {
-        togglePopup(evt.target.closest('.popup'));
+        closePopup(evt.target.closest('.popup'));
     });
 });
 const popups = Array.from(document.querySelectorAll('.popup'));
@@ -162,17 +178,14 @@ function escClose(evt) {
     if (evt.keyCode === 27) {
         popups.forEach((popup) => {
             if (popup.classList.contains("popup__opened")) {
-                togglePopup(popup);
+                closePopup(popup);
             }
         });
     }
 }
-document.addEventListener("keydown", escClose);
-//закрытие при нажатии на overlay
-
 document.querySelectorAll('.popup__overlay').forEach((over) => {
     over.addEventListener('click', (evt) => {
-        togglePopup(evt.target.closest('.popup'));
+        closePopup(evt.target.closest('.popup'));
     });
 
 })
