@@ -116,6 +116,7 @@ function newCard(event) {
     closePopup(event.target.closest('.popup'));
     placeNameInput.value = '';
     linkInput.value = '';
+    enableValidation(formArray);
     event.preventDefault();
 
 }
