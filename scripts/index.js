@@ -1,6 +1,6 @@
 import  Card from './Card.js';
-import Validation from './Validate.js';
-
+import FormValidator from './Validate.js';
+import {openPopup,closePopup} from './utils.js';
 const form = document.querySelector(`.popup__form`);
 const buttonProfile = document.querySelector(`.profile__edit-button`);
 const buttonPlace = document.querySelector(`.profile__add-button`);
@@ -65,24 +65,17 @@ const initialCards = [
     }
 ];
 initialCards.forEach ((element) => {
-   const card = new Card(element, '').renderCards(); 
+   const card = new Card(element, `#card-template`).renderCard(); 
    sectionCards.append(card);
   })
 
-export function openPopup(modalWindow) {
-    modalWindow.classList.add('popup__opened');
-    document.addEventListener('keydown', escClose);
-};
-function closePopup(modalWindow) {
-    modalWindow.classList.remove('popup__opened');
-    document.removeEventListener('keydown', escClose);
-}
+
 function newCard(event) {
     const card = {
         name:placeNameInput.value,
         link:linkInput.value
     }
-    const cardElement =new Card(card, '').renderCards(); 
+    const cardElement =new Card(card,`#card-template`).renderCard(); 
     sectionCards.prepend(cardElement);
     closePopup(event.target.closest('.popup'));
     placeNameInput.value = '';
@@ -104,12 +97,12 @@ const popupPlace = document.querySelector('.popup[data-type="place"]');
 const formProfile = document.querySelector('#form__edit'); // попап профиля
 const formPlace = document.querySelector('#form__add'); // попап карточки
 
-const profileValidation = new Validation(formArray,formProfile);
-const placeValidation =  new Validation(formArray,formPlace);
+const profileValidation = new FormValidator(formArray,formProfile);
+const placeValidation =  new FormValidator(formArray,formPlace);
 profileValidation.enableValidation();
 placeValidation.enableValidation();
 function toggleProfileForm() {
-    if (popupProfile.classList.contains('popup__opened')) {
+    if (popupProfile.classList.contains('popup_opened')) {
         closePopup(popupProfile);
     }
     else {
@@ -119,7 +112,7 @@ function toggleProfileForm() {
     }
 }
 function togglePlaceForm() {
-    if (popupPlace.classList.contains('popup__opened')) {
+    if (popupPlace.classList.contains('popup_opened')) {
         closePopup(popupProfile);
     }
     else {
@@ -138,9 +131,9 @@ document.querySelectorAll('.popup__close').forEach((button) => {
 });
 const popups = Array.from(document.querySelectorAll('.popup'));
 function escClose(evt) {
-    if (evt.keyCode === 27) {
+    if (evt.key === 27) {
         popups.forEach((popup) => {
-            if (popup.classList.contains("popup__opened")) {
+            if (popup.classList.contains("popup_opened")) {
                 closePopup(popup);
             }
         });
