@@ -1,5 +1,5 @@
 import  Card from './Card.js';
-import FormValidator from './Validate.js';
+import FormValidator from './FormValidator.js';
 import {openPopup,closePopup} from './utils.js';
 const form = document.querySelector(`.popup__form`);
 const buttonProfile = document.querySelector(`.profile__edit-button`);
@@ -129,16 +129,8 @@ document.querySelectorAll('.popup__close').forEach((button) => {
         closePopup(evt.target.closest('.popup'));
     });
 });
-const popups = Array.from(document.querySelectorAll('.popup'));
-function escClose(evt) {
-    if (evt.key === 27) {
-        popups.forEach((popup) => {
-            if (popup.classList.contains("popup_opened")) {
-                closePopup(popup);
-            }
-        });
-    }
-}
+export const popups = Array.from(document.querySelectorAll('.popup'));
+
 document.querySelectorAll('.popup__overlay').forEach((over) => {
     over.addEventListener('click', (evt) => {
         closePopup(evt.target.closest('.popup'));
