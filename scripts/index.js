@@ -1,6 +1,6 @@
-import  Card from './Card.js';
+import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-import {openPopup,closePopup} from './utils.js';
+import { openPopup, closePopup } from './utils.js';
 const form = document.querySelector(`.popup__form`);
 const buttonProfile = document.querySelector(`.profile__edit-button`);
 const buttonPlace = document.querySelector(`.profile__add-button`);
@@ -64,23 +64,23 @@ const initialCards = [
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/vladivostok.jpg'
     }
 ];
-initialCards.forEach ((element) => {
-   const card = new Card(element, `#card-template`).renderCard(); 
-   sectionCards.append(card);
-  })
+initialCards.forEach((element) => {
+    const card = new Card(element, `#card-template`).renderCard();
+    sectionCards.append(card);
+})
 
 
 function newCard(event) {
     const card = {
-        name:placeNameInput.value,
-        link:linkInput.value
+        name: placeNameInput.value,
+        link: linkInput.value
     }
-    const cardElement =new Card(card,`#card-template`).renderCard(); 
+    const cardElement = new Card(card, `#card-template`).renderCard();
     sectionCards.prepend(cardElement);
     closePopup(event.target.closest('.popup'));
     placeNameInput.value = '';
     linkInput.value = '';
-  
+
     event.preventDefault();
 
 }
@@ -97,8 +97,8 @@ const popupPlace = document.querySelector('.popup[data-type="place"]');
 const formProfile = document.querySelector('#form__edit'); // попап профиля
 const formPlace = document.querySelector('#form__add'); // попап карточки
 
-const profileValidation = new FormValidator(formArray,formProfile);
-const placeValidation =  new FormValidator(formArray,formPlace);
+const profileValidation = new FormValidator(formArray, formProfile);
+const placeValidation = new FormValidator(formArray, formPlace);
 profileValidation.enableValidation();
 placeValidation.enableValidation();
 function toggleProfileForm() {
