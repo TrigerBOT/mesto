@@ -80,41 +80,33 @@ const popupWithFormEdit = new PopupWithForm(
         console.log(data);
     }
 )
-
-function newCard(item){
-    return new Card(
-        item,
-       '#card-template',
-       (name, url) => {
-           popupWithImage.openPopup(name, url);
-       },
-   ); 
-}
-const popupWithFormAdd = new PopupWithForm(
-    '.popup[data-type ="place"]',
-        (data) => {
-            const cardList = new Section({
-                items:data,
-                renderer:(item) => {
-                    const card= newCard(item);
-                    const cardElement = card.renderCard();
-                    cardList.addItem(cardElement);
-                }
-            }
-            , '.cards')
-            cardList.renderItems(false);
-        }    
-)
 const cardList = new Section({
     items:initialCards,
-    renderer:(item) => {
-        const card= newCard(item);
-        const cardElement = card.renderCard();
-        cardList.addItem(cardElement);
+    renderer: (card) => {
+        newCard(card);
     }
 }
-, '.cards')
-cardList.renderItems(true);
+, '.cards');
+cardList.renderItems();
+function newCard(card, isAdded = false){
+    const cardObject= new Card(
+        card,
+       '#card-template',
+       (name, link) => {
+        popupWithImage.open(name, link);
+      }
+   ); 
+   const cardElement = cardObject.renderCard();
+   cardList.addItem(cardElement, isAdded);
+}
+
+const popupWithFormAdd = new PopupWithForm(
+    '.popup[data-type ="place"]',
+        (data) => { 
+            newCard(data, true);
+        }    
+)
+
 
 //Добавление слушателей для кнопок редактирования и добавления
 function editButtonHandler () {
