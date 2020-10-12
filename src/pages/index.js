@@ -1,16 +1,13 @@
-import Card from './scripts/Card.js';
-import FormValidator from './scripts/FormValidator.js';
-import PopupWithForm  from './scripts/PopupWithForm.js';
-import Section from './scripts/Section.js';
-import PopupWithImage from './scripts/PopupWithImage.js';
-import UserInfo from './scripts/UserInfo.js';
-import './pages/index.css';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm  from '../components/PopupWithForm.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
+import './index.css';
 const buttonProfile = document.querySelector(`.profile__edit-button`);
 const buttonPlace = document.querySelector(`.profile__add-button`);
-const name = document.querySelector(`.profile__name`);
-const about = document.querySelector(`.profile__about`);
-const nameInput = document.querySelector(`.popup__input_name`);
-const aboutInput = document.querySelector(`.popup__input_about`);
+
 const formArray = {
     inputElement: '.popup__input',
     errorClass: 'popup__input-error_active',
@@ -19,8 +16,7 @@ const formArray = {
 };
 
 
-aboutInput.value = about.textContent;
-nameInput.value = name.textContent;
+
 
 const initialCards = [
     {
@@ -65,29 +61,14 @@ const initialCards = [
     }
 ];
 
-const cardList = new Section({
-    items:initialCards,
-    renderer:(item) => {
-        const card = new Card(
-             item,
-            '#card-template',
-            (name, link) => {
-                popupWithImage.openPopup(name, link);
-            },
-        )
-        const cardElement = card.renderCard();
-        cardList.setItem(cardElement);
-    }
-}
-, '.cards')
-cardList.renderItems()
+
    
 const userInfo = new UserInfo({
-    name: name,
-    about: about,
+    name: '.profile__name' ,
+    about: '.profile__about',
 
 })
-
+userInfo.setUserInfo({name:'Жак',about:'Океанолог'})
 
 
 
@@ -96,39 +77,50 @@ const popupWithFormEdit = new PopupWithForm(
      '.popup[data-type ="profile_edit"]',
      (data) => {
         userInfo.setUserInfo(data);
-        name.textContent = data.name;
-        about.textContent = data.about;
+        console.log(data);
     }
 )
 
+function newCard(item){
+    return new Card(
+        item,
+       '#card-template',
+       (name, url) => {
+           popupWithImage.openPopup(name, url);
+       },
+   ); 
+}
 const popupWithFormAdd = new PopupWithForm(
     '.popup[data-type ="place"]',
         (data) => {
-            const cardNew = new Section({
+            const cardList = new Section({
                 items:data,
                 renderer:(item) => {
-                    const card = new Card(
-                         item,
-                        '#card-template',
-                        (name, url) => {
-                            popupWithImage.openPopup(name, url);
-                        },
-                    )
+                    const card= newCard(item);
                     const cardElement = card.renderCard();
-                    cardNew.setItem(cardElement);
+                    cardList.addItem(cardElement);
                 }
             }
             , '.cards')
-            cardNew.renderItems();
+            cardList.renderItems(false);
         }    
 )
-
+const cardList = new Section({
+    items:initialCards,
+    renderer:(item) => {
+        const card= newCard(item);
+        const cardElement = card.renderCard();
+        cardList.addItem(cardElement);
+    }
+}
+, '.cards')
+cardList.renderItems(true);
 
 //Добавление слушателей для кнопок редактирования и добавления
 function editButtonHandler () {
     const userObject =  userInfo.getUserInfo();
-    name.value = userObject.name;
-    about.value = userObject.about;
+   
+    popupWithFormEdit.fillInputs(userObject);
     profileValidation.enableValidation();
     popupWithFormEdit.openPopup();
 }
@@ -144,7 +136,6 @@ buttonPlace.addEventListener('click', addButtonHandler);
 
 
 
-const popupPlace = document.querySelector('.popup[data-type="place"]');
 const formProfile = document.querySelector('#form__edit'); // попап профиля
 const formPlace = document.querySelector('#form__add'); // попап карточки
 
