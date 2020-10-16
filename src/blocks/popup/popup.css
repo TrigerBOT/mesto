@@ -11,6 +11,7 @@
 @import url(./__img/popup__img.css);
 @import url(./__overlay/popup__overlay.css);
 @import url(./__input-error/popup__input-error.css);
+@import url(./__confirm/popup__confirm.css);
 .popup {
     position: fixed;
     display: flex;

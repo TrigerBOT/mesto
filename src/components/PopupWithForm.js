@@ -4,6 +4,8 @@ export default class PopupWithForm extends Popup {
         super(popupSelector);
         this._submitForm = submitForm;
         this._formElement = this._modalWindow.querySelector('.popup__form');
+        this._submitButton = this._modalWindow.querySelector('.popup__submit');
+        this._waitSelector = 'popup__submit_wait';
     }
 
     _getInputValues() {
@@ -17,10 +19,14 @@ export default class PopupWithForm extends Popup {
         super.setEventListeners();
         this._formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._handleFormSubmit()
+        
+            this._submitButton.classList.add(this._waitSelector);
+            this._handleFormSubmit();
+
         } ,{once: true})
 
     }
+    
     fillInputs(data){
      
         this._inputList = this._modalWindow.querySelectorAll('.popup__input');
@@ -32,16 +38,17 @@ export default class PopupWithForm extends Popup {
     _handleFormSubmit() {
 
         this._submitForm(this._getInputValues());
-        this.closePopup();
+       setTimeout(this.closePopup(),2000);
     }
     closePopup() {
         super.closePopup();
-        this._clearInputs();
+      
         this._formElement.removeEventListener('submit', (evt) => {
             evt.preventDefault();
             this._handleFormSubmit()
         });
-       
+        this._clearInputs();
+        this._submitButton.classList.remove(this._waitSelector);
     
     }
 

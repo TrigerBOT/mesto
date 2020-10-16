@@ -1,0 +1,11 @@
+.profile__overlay{
+    position: absolute;
+    display: flex;
+    top: 50px;
+    left: 50px;
+    opacity: 0;
+}
+.profile__photo:hover~.profile_overlay{
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}

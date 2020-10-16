@@ -1,0 +1,6 @@
+.profile__avatar{
+    display: flex;
+    position: relative;
+    width: 127px;
+    height: 127px;
+}

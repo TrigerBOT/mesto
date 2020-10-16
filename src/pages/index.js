@@ -1,86 +1,31 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithForm  from '../components/PopupWithForm.js';
+import PopupConfirm from '../components/PopupConfirm.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import './index.css';
 const buttonProfile = document.querySelector(`.profile__edit-button`);
 const buttonPlace = document.querySelector(`.profile__add-button`);
-
+const buttonAvatar = document.querySelector('.profile__avatar');
 const formArray = {
     inputElement: '.popup__input',
     errorClass: 'popup__input-error_active',
     submitButtonSelector: '.popup__submit',
     inactiveButtonClass: 'popup__submit_disabled',
 };
+const api = new Api("https://mesto.nomoreparties.co/v1/cohort-16", {
+  authorization: "0100295d-ffab-4dd9-a2ae-64af071cc3da",
+});
 
 
-
-
-const initialCards = [
-    {
-        name: 'Архыз',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    },
-    {
-        name: 'Нургуш',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/khrebet-nurgush.jpg'
-    },
-    {
-        name: 'Тулиновка',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/tulinovka.jpg'
-    },
-    {
-        name: 'Остров Желтухина',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/zheltukhin-island.jpg'
-    },
-    {
-        name: 'Владивосток',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/vladivostok.jpg'
-    }
-];
-
-
-   
-const userInfo = new UserInfo({
-    name: '.profile__name' ,
-    about: '.profile__about',
-
-})
-userInfo.setUserInfo({name:'Жак',about:'Океанолог'})
-
-
-
-
-const popupWithFormEdit = new PopupWithForm(
-     '.popup[data-type ="profile_edit"]',
-     (data) => {
-        userInfo.setUserInfo(data);
-        console.log(data);
-    }
-)
-const cardList = new Section({
+//отрисовка карточек
+let cardList;
+const successCardsInitial = (initialCards) =>{
+    //секция с карточками
+ cardList = new Section({
     items:initialCards,
     renderer: (card) => {
         newCard(card);
@@ -88,68 +33,175 @@ const cardList = new Section({
 }
 , '.cards');
 cardList.renderItems();
+}
+
+// всё о юзере
+let userInfo;
+const successUserInfo = (info) =>{
+    userInfo = new UserInfo({
+        name: '.profile__name' ,
+        about: '.profile__about',
+    
+    },info)
+    userInfo.setUserInfo(info);
+} 
+const errorUserInfo = (err)=>{
+    console.log(err)
+}
+
+api.getUserInfo()
+.then((info)=>{
+    successUserInfo(info);
+    api.getInitialsCards()
+    .then(successCardsInitial)
+    .catch(err => {
+        console.log(err);
+    })
+})
+.catch(errorUserInfo)
+
+//удаление карточки 
+const deleteSubmit =(evt,card)=>{
+    evt.preventDefault();
+
+    api.removeCard(card.getId())
+    .then(()=>{return true})
+    .catch(err=>{
+        console.log(err);
+    })
+    .finally(()=>{
+        popupConfirmForm.closePopup();
+        
+    })
+}
+// функция при сабмите editProfile
+const editSubmit = (info)=>{
+ //   evt.preventDefault();
+    api.editUserInfo(info)
+    .then(()=>{
+       userInfo.setUserInfo(info); 
+    })
+    .catch(err=>{
+        console.log('ures');
+    })
+    .finally(()=>{
+        popupWithFormEdit.closePopup();
+    })
+}
+//функция при сабмите newCard
+const addSubmit = (card)=>{
+    api.postCard(card)
+    .then( (postedCard)=>{newCard(postedCard,true);} )
+    .catch((err)=>{
+        console.log(err);
+    })
+   .finally(()=>{
+     popupWithFormAdd.closePopup();
+   });
+}
+//функция добавления карточки на сайт 
 function newCard(card, isAdded = false){
     const cardObject= new Card(
         card,
        '#card-template',
-       (name, link) => {
-        popupWithImage.open(name, link);
+   {
+        handleCardClick: (name, link) => {
+        popupWithImage.openPopup(name, link);
       }
+      ,
+      handleRemoveClick: () => {
+        popupConfirmForm.openPopup(cardObject);
+      }
+      ,
+      handleLikeClick: () => {
+        const cardLiked = cardObject.isLiked(userInfo);
+       
+        const apiResult = cardLiked ? api.unlikeCard(cardObject.getId()) : api.likeCard(cardObject.getId());
+        apiResult
+        .then((card) => {
+            console.log(cardLiked);
+            console.log(card.likes);
+          cardObject.setLikes(card.likes);
+          
+          cardObject.renderLike(userInfo);
+        })
+        .catch((ree)=> {
+          console.log(ree);
+        });
+      }
+    }
    ); 
-   const cardElement = cardObject.renderCard();
+   const cardElement = cardObject.renderCard(userInfo);
    cardList.addItem(cardElement, isAdded);
 }
-
+//смена аватара
+const avatarSubmit = (link) =>{
+    console.log(link)
+    api.editAvatar(link)
+    .then(()=>{
+        userInfo.setUserAvatar(link);
+    })
+    .catch(err =>{console.log(err);})
+    .finally(()=>{
+        popupWithAvatar.closePopup();
+    })
+}
+//попапы
+const popupWithFormEdit = new PopupWithForm(
+     '.popup[data-type ="profile_edit"]',
+     editSubmit
+)
 const popupWithFormAdd = new PopupWithForm(
     '.popup[data-type ="place"]',
-        (data) => { 
-            newCard(data, true);
-        }    
+    addSubmit  
 )
-
+const popupWithImage = new PopupWithImage('.popup[data-type="img"]');
+const popupWithAvatar = new PopupWithForm('.popup[data-type="avatar"]',
+avatarSubmit
+);
+const popupConfirmForm = new PopupConfirm(
+    '.popup[data-type="confirm"]',
+    (evt, card) => {
+        if(deleteSubmit(evt, card)){
+            card.deleteCard();
+        }
+        
+    }
+  );
 
 //Добавление слушателей для кнопок редактирования и добавления
+buttonProfile.addEventListener('click', editButtonHandler);
 function editButtonHandler () {
     const userObject =  userInfo.getUserInfo();
-   
     popupWithFormEdit.fillInputs(userObject);
     profileValidation.enableValidation();
     popupWithFormEdit.openPopup();
 }
-buttonProfile.addEventListener('click', editButtonHandler);
 
+buttonPlace.addEventListener('click', addButtonHandler);
 function addButtonHandler () {
     placeValidation.enableValidation()
     popupWithFormAdd.openPopup();
 }
-buttonPlace.addEventListener('click', addButtonHandler);
-
-
-
-
-
+buttonAvatar.addEventListener('click',()=>{
+    popupWithAvatar.openPopup();
+})
+//валидация 
 const formProfile = document.querySelector('#form__edit'); // попап профиля
 const formPlace = document.querySelector('#form__add'); // попап карточки
-
-
-
-
-const popupWithImage = new PopupWithImage('.popup[data-type="img"]');
+const formAvatar = document.querySelector('#form__avatar');// попап автара
+const avatarValidation = new FormValidator(formArray,formAvatar)
+const profileValidation = new FormValidator(formArray, formProfile);
+const placeValidation = new FormValidator(formArray, formPlace);
+profileValidation.enableValidation();
+placeValidation.enableValidation();
+avatarValidation.enableValidation();
 
 // добавляем попапам обработчики
 popupWithFormEdit.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithFormAdd.setEventListeners();
-
-
-
-const profileValidation = new FormValidator(formArray, formProfile);
-const placeValidation = new FormValidator(formArray, formPlace);
-profileValidation.enableValidation();
-placeValidation.enableValidation();
-
-
-
+popupConfirmForm.setEventListeners();
 
 
 
