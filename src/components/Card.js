@@ -26,8 +26,7 @@ export default class Card {
 
   _getTemplate() { 
     const cardElement = this._template.cloneNode(true); 
-    this._element = cardElement; 
-    return this._element; 
+    return cardElement; 
   }
   
   _setEventListeners() {
@@ -35,50 +34,54 @@ export default class Card {
       this._handleCardClick(this._name, this._link);
     })
     this._basket.addEventListener("click", () => { 
-      this._handleRemoveClick(); 
+      this._handleRemoveClick(this); 
     }); 
     this._like.addEventListener("click", () => { 
-      this._handleLikeClick();
+      this._handleLikeClick(this);
     }); 
   }
 
  deleteCard() {
-    this._cloneCard.remove();
-    this._cloneCard = null;
+
+  this._basket.parentElement.remove()
+    
+    
   }
 
-  isLiked(currentUser) {
-   this._likes.includes(currentUser);
+  isLiked(currentUserId) {
+    return this._likes.some(like => like._id === currentUserId);
   
   }
 
   //  о лайках
-  renderLike(currentUser) {
+  renderLike(currentUserId) {
  
-    if (this.isLiked(currentUser)) {
-      console.log(this.isLiked(currentUser));
+    if (this.isLiked(currentUserId)) {
       this._like.classList.add(`card__liked`);
+      this._likeCounter.textContent = this._likes.length;
     } else {
    
       this._like.classList.remove(`card__liked`);
+      this._likeCounter.textContent = this._likes.length;
     }
     
   }
 
 
-  renderCard(currentUser) {
+  renderCard(currentUserId) {
     this._cloneCard = this._getTemplate();
     this._card = this._cloneCard.querySelector('.card');
     this._img = this._cloneCard.querySelector(`.card__photo`);
     this._img.src = this._link;
     this._img.alt = this._name;
-  
+   this._likeCounter =this._cloneCard.querySelector(`${this._counter}`) ;
     this._like = this._cloneCard.querySelector('.card__like');
 
     this._basket = this._cloneCard.querySelector('.card__delete');
     this._cloneCard.querySelector('.card__title').textContent = this._name;
-    this.renderLike(currentUser);
     this.setLikes(this._likes);
+    this.renderLike(currentUserId);
+    
     this._setEventListeners();
 
     return this._cloneCard;
@@ -90,7 +93,7 @@ export default class Card {
 
   setLikes(likes) {
     this._likes = likes;
-    this._cloneCard.querySelector(`${this._counter}`).textContent = this._likes.length;
+  
   }
 
 
