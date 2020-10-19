@@ -58,7 +58,6 @@ export default class FormValidator {
     }
     checkButton() {
         this._checkButtonState();
-        console.log('made')
       }
     
     enableValidation() {

@@ -122,7 +122,6 @@ function newCard(card, isAdded = false){
       ,
       handleLikeClick: (card) => {
         const cardLiked = card.isLiked(userInfo._id);
-        console.log(card);
         if(cardLiked){
             api.unlikeCard(card.getId())
             .then((res) => {
@@ -152,8 +151,6 @@ function newCard(card, isAdded = false){
 }
 //смена аватара
 const avatarSubmit = (link) =>{
-  
-    console.log(link)
     api.editAvatar(link)
     .then(()=>{
         api.getUserInfo()
