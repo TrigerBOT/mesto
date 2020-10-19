@@ -88,7 +88,7 @@ const addSubmit = (evt,card)=>{
     })
    .finally(()=>{
      popupWithFormAdd.closePopup();
-     formPlace.checkButton();
+     placeValidation.checkButton();
    });
 }
 //удаление карточки 
