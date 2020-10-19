@@ -1,3 +1,4 @@
+@import url(./_hidden/card__delete_hidden.css);
 .card__delete{
     background: url(../../../images/delete.svg) center no-repeat;
     background-color: transparent;

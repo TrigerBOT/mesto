@@ -2,7 +2,7 @@
 export default class Card {
 
 
-  constructor(data, cardSelector, funсtions) {
+  constructor(data, cardSelector, callbacks) {
    //селекторы 
     this._template = document.querySelector(`${cardSelector}`).content;
     this._liked = `.card__liked`;
@@ -18,9 +18,9 @@ export default class Card {
     this._createdAt = data.createdAt;
 
     //functions
-    this._handleCardClick = funсtions.handleCardClick;
-    this._handleRemoveClick = funсtions.handleRemoveClick;
-    this._handleLikeClick = funсtions.handleLikeClick;
+    this._handleCardClick = callbacks.handleCardClick;
+    this._handleRemoveClick = callbacks.handleRemoveClick;
+    this._handleLikeClick = callbacks.handleLikeClick;
   }
 
 
@@ -67,6 +67,11 @@ export default class Card {
     
   }
 
+  _cardOwner(currentUserId){
+    if(this._owner._id != currentUserId){
+      this._basket.classList.add('card__delete_hidden');
+    }
+  }
 
   renderCard(currentUserId) {
     this._cloneCard = this._getTemplate();
@@ -81,7 +86,7 @@ export default class Card {
     this._cloneCard.querySelector('.card__title').textContent = this._name;
     this.setLikes(this._likes);
     this.renderLike(currentUserId);
-    
+    this._cardOwner(currentUserId);
     this._setEventListeners();
 
     return this._cloneCard;

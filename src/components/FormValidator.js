@@ -40,19 +40,27 @@ export default class FormValidator {
             submitButton.removeAttribute('disabled', 'disabled')
         }
     }
-    _setEventListeners() {
+    _checkButtonState() {
         const inputList = Array.from(this._formElement.querySelectorAll(this._inputElement));
         const submitButton = this._formElement.querySelector(this._submitButtonSelector);
         this._toggleButtonState(inputList, submitButton);
+      }
+    _setEventListeners() {
+                const inputList = Array.from(this._formElement.querySelectorAll(this._inputElement));
+        const submitButton = this._formElement.querySelector(this._submitButtonSelector);
+        this._toggleButtonState(inputList, submitButton);
         inputList.forEach((input) => {
-
             input.addEventListener('input', () => {
                 this._checkValidity(input);
                 this._toggleButtonState(inputList, submitButton);
             })
         })
     }
-
+    checkButton() {
+        this._checkButtonState();
+        console.log('made')
+      }
+    
     enableValidation() {
         this._setEventListeners();
     }

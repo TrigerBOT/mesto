@@ -38,6 +38,7 @@ cardList.renderItems();
 // всё о юзере
 let userInfo;
 const successUserInfo = (info) =>{
+
     userInfo = new UserInfo({
         name: '.profile__name' ,
         about: '.profile__about',
@@ -62,21 +63,24 @@ api.getUserInfo()
 
 
 // функция при сабмите editProfile
-const editSubmit = (info)=>{
- //   evt.preventDefault();
+const editSubmit = (evt,info)=>{
+   evt.preventDefault();
     api.editUserInfo(info)
     .then(()=>{
+        info.avatar = userInfo.getUserAvatar()
        userInfo.setUserInfo(info); 
     })
     .catch(err=>{
-        console.log('ures');
+        console.log(err);
     })
     .finally(()=>{
         popupWithFormEdit.closePopup();
+        
     })
 }
 //функция при сабмите newCard
-const addSubmit = (card)=>{
+const addSubmit = (evt,card)=>{
+    evt.preventDefault();
     api.postCard(card)
     .then( (postedCard)=>{newCard(postedCard,true);} )
     .catch((err)=>{
@@ -84,6 +88,7 @@ const addSubmit = (card)=>{
     })
    .finally(()=>{
      popupWithFormAdd.closePopup();
+     formPlace.checkButton();
    });
 }
 //удаление карточки 
@@ -147,6 +152,7 @@ function newCard(card, isAdded = false){
 }
 //смена аватара
 const avatarSubmit = (link) =>{
+  
     console.log(link)
     api.editAvatar(link)
     .then(()=>{
@@ -159,6 +165,7 @@ const avatarSubmit = (link) =>{
     .catch(err =>{console.log(err);})
     .finally(()=>{
         popupWithAvatar.closePopup();
+        formAvatar.resetValidation();
     })
 }
 //попапы
@@ -168,7 +175,7 @@ const popupWithFormEdit = new PopupWithForm(
 )
 const popupWithFormAdd = new PopupWithForm(
     '.popup[data-type ="place"]',
-    addSubmit  
+    addSubmit
 )
 const popupWithImage = new PopupWithImage('.popup[data-type="img"]');
 const popupWithAvatar = new PopupWithForm('.popup[data-type="avatar"]',
@@ -176,24 +183,26 @@ avatarSubmit
 );
 const popupConfirmForm = new PopupConfirm(
     '.popup[data-type="confirm"]',
-    (card) => {
-        deleteSubmit(card) ;
-    }
+    
+        deleteSubmit
+    
   );
-
+    
 //Добавление слушателей для кнопок редактирования и добавления
 buttonProfile.addEventListener('click', editButtonHandler);
 function editButtonHandler () {
+    
     const userObject =  userInfo.getUserInfo();
-    popupWithFormEdit.fillInputs(userObject);
-    profileValidation.enableValidation();
+    popupWithFormEdit.fillInputs(userObject);   
     popupWithFormEdit.openPopup();
+    profileValidation.checkButton();
 }
 
 buttonPlace.addEventListener('click', addButtonHandler);
 function addButtonHandler () {
-    placeValidation.enableValidation()
     popupWithFormAdd.openPopup();
+    popupWithFormEdit.fillInputs({name:'',link:''}); 
+    placeValidation.checkButton();
 }
 buttonAvatar.addEventListener('click',()=>{
     popupWithAvatar.openPopup();
@@ -214,6 +223,7 @@ popupWithFormEdit.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithFormAdd.setEventListeners();
 popupConfirmForm.setEventListeners();
+popupWithAvatar.setEventListeners();
 
 
 
